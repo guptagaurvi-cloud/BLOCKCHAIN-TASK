@@ -66,6 +66,7 @@ class Blockchain:
   # Adding and linking the blocks in Blockchain
   def add_block(self,block):
     block.previous_hash = self.chain[-1].hash
+    block.hash = block.calculate_hash()
     block.mine_block(self.difficulty)
     self.chain.append(block)
 
@@ -75,11 +76,11 @@ class Blockchain:
       current_block = self.chain[i]
       previous_block = self.chain[i-1]
     
-      # Verfies if the hash is correct
+      # Verifies if the hash is correct
       if current_block.hash != current_block.calculate_hash():
         return False
         
-      # Verfifies if the blocks are linked correctly
+      # Verifies if the blocks are linked correctly
       if current_block.previous_hash != previous_block.hash:
         return False
 
